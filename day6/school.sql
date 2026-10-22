@@ -32,9 +32,7 @@ CREATE TABLE enrolments (
     FOREIGN KEY (course_id)  REFERENCES courses(id)  ON DELETE CASCADE
 );
 
--- =============================================
 -- Sample data
--- =============================================
 
 INSERT INTO students (name, email, age) VALUES
     ('Grace Wanjiru',  'grace@example.com', 21),
@@ -53,9 +51,7 @@ INSERT INTO enrolments (student_id, course_id, grade) VALUES
     (2, 3, 'A-'),  -- Brian  → JavaScript Basics
     (3, 2, NULL);  -- Aisha  → Databases 101 (not yet graded)
 
--- =============================================
 -- Queries
--- =============================================
 
 -- Q1: All courses for one student (by name)
 --     Expect: Grace's two courses
@@ -85,14 +81,14 @@ GROUP BY c.id
 ORDER BY student_count DESC, c.title;
 
 -- Q4: Students who have no enrolments
---     Expect: (empty result — all three students are enrolled)
+--  Expect: (empty result — all three students are enrolled)
 SELECT s.name, s.email
 FROM students s
 LEFT JOIN enrolments e ON e.student_id = s.id
 WHERE e.id IS NULL;
 
 -- Q5: Update one enrolment's grade
---     Change Brian's Web Foundations grade from 'B' to 'A'
+-- Change Brian's Web Foundations grade from 'B' to 'A'
 UPDATE enrolments
 SET grade = 'A'
 WHERE student_id = (SELECT id FROM students WHERE name = 'Brian Otieno')
